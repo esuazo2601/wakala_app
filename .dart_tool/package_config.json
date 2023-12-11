@@ -134,13 +134,13 @@
       "languageVersion": "3.1"
     },
     {
-      "name": "flutterviz",
+      "name": "wakala_app",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     }
   ],
-  "generated": "2023-12-11T00:28:03.269103Z",
+  "generated": "2023-12-11T00:34:38.174147Z",
   "generator": "pub",
   "generatorVersion": "3.1.3"
 }

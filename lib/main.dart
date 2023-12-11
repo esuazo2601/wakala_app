@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wakala_app/LoginScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,9 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FlutterViz Demo',
-
-      /// TODO Replace with your first screen class name
-      home: MyHomePage(),
+      home: LoginScreen(),
     );
   }
 }
