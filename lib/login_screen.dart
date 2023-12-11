@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:wakala_app/firebase/firestore.dart';
+//import 'package:wakala_app/models/models.dart';
+import 'package:wakala_app/wakalas_list.dart';
+import 'package:motion_toast/motion_toast.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _userController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
                   child: TextField(
-                    controller: TextEditingController(text: ""),
+                    controller: _userController,
                     obscureText: false,
                     textAlign: TextAlign.start,
                     maxLines: 1,
@@ -85,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 TextField(
-                  controller: TextEditingController(text: ""),
+                  controller: _passwordController,
                   obscureText: true,
                   textAlign: TextAlign.start,
                   maxLines: 1,
@@ -140,7 +152,26 @@ class LoginScreen extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.center,
                           child: MaterialButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              BuildContext currentContext =
+                                  context; // Almacena el contexto actual
+
+                              bool loginSuccess = await handleLogin(
+                                  _userController.text,
+                                  _passwordController.text);
+
+                              if (loginSuccess) {
+                                Navigator.pop(currentContext);
+                                Navigator.push(
+                                  currentContext,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const WakalasList()),
+                                );
+                              } else {
+                                print("Error");
+                              }
+                            },
                             color: const Color(0xff3a57e8),
                             elevation: 0,
                             shape: RoundedRectangleBorder(

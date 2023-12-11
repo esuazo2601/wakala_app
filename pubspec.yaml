@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.24.2
   cloud_firestore: ^4.13.5
+  motion_toast: ^2.7.10
 
 dev_dependencies:
   flutter_test:

@@ -140,6 +140,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "motion_toast",
+      "rootUri": "file:///C:/Users/Esteban/AppData/Local/Pub/Cache/hosted/pub.dev/motion_toast-2.7.10",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "path",
       "rootUri": "file:///C:/Users/Esteban/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
@@ -212,7 +218,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2023-12-11T01:44:04.968372Z",
+  "generated": "2023-12-11T03:23:16.881460Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }

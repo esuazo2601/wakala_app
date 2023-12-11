@@ -1,10 +1,16 @@
 ///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
 
 import 'package:flutter/material.dart';
+import 'package:wakala_app/login_screen.dart';
 
-class WakalasList extends StatelessWidget {
+class WakalasList extends StatefulWidget {
   const WakalasList({super.key});
 
+  @override
+  State<WakalasList> createState() => _WakalasListState();
+}
+
+class _WakalasListState extends State<WakalasList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,10 +32,18 @@ class WakalasList extends StatelessWidget {
             color: Color(0xffdfdfdf),
           ),
         ),
-        leading: const Icon(
-          Icons.arrow_back,
-          color: Color(0xff212435),
-          size: 24,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Color(0xff212435),
+            size: 24,
+          ),
+          onPressed: () {
+            // Regresar a la pantalla de login
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
+          },
         ),
       ),
       body: Padding(
@@ -53,7 +67,8 @@ class WakalasList extends StatelessWidget {
                       color: const Color(0xffffffff),
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(color: const Color(0x4d9e9e9e), width: 1),
+                      border:
+                          Border.all(color: const Color(0x4d9e9e9e), width: 1),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -122,7 +137,8 @@ class WakalasList extends StatelessWidget {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
+                                      padding:
+                                          const EdgeInsets.fromLTRB(0, 4, 0, 0),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -146,8 +162,8 @@ class WakalasList extends StatelessWidget {
                                             ),
                                           ),
                                           Container(
-                                            margin:
-                                                const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                            margin: const EdgeInsets.fromLTRB(
+                                                8, 0, 0, 0),
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 4, horizontal: 8),
                                             decoration: BoxDecoration(
