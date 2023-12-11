@@ -3,19 +3,21 @@
 import 'package:flutter/material.dart';
 
 class Detalles extends StatelessWidget {
+  const Detalles({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffffffff),
+      backgroundColor: const Color(0xffffffff),
       appBar: AppBar(
         elevation: 3,
         centerTitle: false,
         automaticallyImplyLeading: false,
-        backgroundColor: Color(0xffffffff),
-        shape: RoundedRectangleBorder(
+        backgroundColor: const Color(0xffffffff),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
-        title: Text(
+        title: const Text(
           "Dentro de wakala",
           style: TextStyle(
             fontWeight: FontWeight.w700,
@@ -24,7 +26,7 @@ class Detalles extends StatelessWidget {
             color: Color(0xff000000),
           ),
         ),
-        leading: Icon(
+        leading: const Icon(
           Icons.arrow_back,
           color: Color(0xff212435),
           size: 24,
@@ -37,14 +39,14 @@ class Detalles extends StatelessWidget {
           alignment: Alignment.topLeft,
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(16, 16, 16, 80),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
@@ -81,7 +83,7 @@ class Detalles extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Padding(
+                    const Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 0),
                       child: Row(
@@ -131,7 +133,7 @@ class Detalles extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Spinach is a herbaceous plant whose leaves, green and arranged in rosette, are eaten raw or cooked. The leaves have an oval shape and are wrinkled; they can be whole or sawed. It is a very nutritious, tasteful and easy-to-digest plant. The Arabs regarded it as the queen of vegetables.",
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.clip,
@@ -143,7 +145,7 @@ class Detalles extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 15, 0, 20),
+                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,15 +158,19 @@ class Detalles extends StatelessWidget {
                             children: [
                               MaterialButton(
                                 onPressed: () {},
-                                color: Color(0xffffffff),
+                                color: const Color(0xffffffff),
                                 elevation: 0,
-                                shape: RoundedRectangleBorder(
+                                shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.zero,
                                   side: BorderSide(
                                       color: Color(0xff000000), width: 1),
                                 ),
-                                padding: EdgeInsets.all(16),
-                                child: Text(
+                                padding: const EdgeInsets.all(16),
+                                textColor: const Color(0xff000000),
+                                height: 40,
+                                minWidth:
+                                    MediaQuery.of(context).size.width * 0.3,
+                                child: const Text(
                                   "Sigue ahi (C)",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -172,10 +178,6 @@ class Detalles extends StatelessWidget {
                                     fontStyle: FontStyle.normal,
                                   ),
                                 ),
-                                textColor: Color(0xff000000),
-                                height: 40,
-                                minWidth:
-                                    MediaQuery.of(context).size.width * 0.3,
                               ),
                             ],
                           ),
@@ -186,15 +188,19 @@ class Detalles extends StatelessWidget {
                             children: [
                               MaterialButton(
                                 onPressed: () {},
-                                color: Color(0xffffffff),
+                                color: const Color(0xffffffff),
                                 elevation: 2,
-                                shape: RoundedRectangleBorder(
+                                shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.zero,
                                   side: BorderSide(
                                       color: Color(0xff000000), width: 1),
                                 ),
-                                padding: EdgeInsets.all(16),
-                                child: Text(
+                                padding: const EdgeInsets.all(16),
+                                textColor: const Color(0xff000000),
+                                height: 40,
+                                minWidth:
+                                    MediaQuery.of(context).size.width * 0.3,
+                                child: const Text(
                                   "Ya no está (C)",
                                   style: TextStyle(
                                     fontSize: 14,
@@ -202,10 +208,6 @@ class Detalles extends StatelessWidget {
                                     fontStyle: FontStyle.normal,
                                   ),
                                 ),
-                                textColor: Color(0xff000000),
-                                height: 40,
-                                minWidth:
-                                    MediaQuery.of(context).size.width * 0.3,
                               ),
                             ],
                           ),
@@ -213,18 +215,18 @@ class Detalles extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.all(0),
-                      padding: EdgeInsets.all(0),
+                      margin: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(0),
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
-                        color: Color(0x00000000),
+                        color: const Color(0x00000000),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.zero,
-                        border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+                        border: Border.all(color: const Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -235,7 +237,7 @@ class Detalles extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Column(
+                                const Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.max,
@@ -260,15 +262,20 @@ class Detalles extends StatelessWidget {
                                   children: [
                                     MaterialButton(
                                       onPressed: () {},
-                                      color: Color(0xffffffff),
+                                      color: const Color(0xffffffff),
                                       elevation: 0,
-                                      shape: RoundedRectangleBorder(
+                                      shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.zero,
                                         side: BorderSide(
                                             color: Color(0xff808080), width: 1),
                                       ),
-                                      padding: EdgeInsets.all(16),
-                                      child: Text(
+                                      padding: const EdgeInsets.all(16),
+                                      textColor: const Color(0xff000000),
+                                      height: 40,
+                                      minWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.2,
+                                      child: const Text(
                                         "Comentar",
                                         style: TextStyle(
                                           fontSize: 14,
@@ -276,29 +283,24 @@ class Detalles extends StatelessWidget {
                                           fontStyle: FontStyle.normal,
                                         ),
                                       ),
-                                      textColor: Color(0xff000000),
-                                      height: 40,
-                                      minWidth:
-                                          MediaQuery.of(context).size.width *
-                                              0.2,
                                     ),
                                   ],
                                 ),
                               ],
                             ),
                             Container(
-                              margin: EdgeInsets.fromLTRB(0, 12, 0, 0),
-                              padding: EdgeInsets.all(0),
+                              margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                              padding: const EdgeInsets.all(0),
                               width: MediaQuery.of(context).size.width * 0.8,
                               height: MediaQuery.of(context).size.height * 0.1,
                               decoration: BoxDecoration(
-                                color: Color(0x19000000),
+                                color: const Color(0x19000000),
                                 shape: BoxShape.rectangle,
                                 borderRadius: BorderRadius.zero,
                                 border: Border.all(
-                                    color: Color(0x4d9e9e9e), width: 1),
+                                    color: const Color(0x4d9e9e9e), width: 1),
                               ),
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisSize: MainAxisSize.max,
@@ -360,19 +362,22 @@ class Detalles extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: MaterialButton(
                   onPressed: () {},
-                  color: Color(0xff3a57e8),
+                  color: const Color(0xff3a57e8),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0),
-                    side: BorderSide(color: Color(0xffffffff), width: 1),
+                    side: const BorderSide(color: Color(0xffffffff), width: 1),
                   ),
-                  padding: EdgeInsets.all(16),
-                  child: Text(
+                  padding: const EdgeInsets.all(16),
+                  textColor: const Color(0xffffffff),
+                  height: 50,
+                  minWidth: MediaQuery.of(context).size.width,
+                  child: const Text(
                     " Volver al listado",
                     style: TextStyle(
                       fontSize: 16,
@@ -380,9 +385,6 @@ class Detalles extends StatelessWidget {
                       fontStyle: FontStyle.normal,
                     ),
                   ),
-                  textColor: Color(0xffffffff),
-                  height: 50,
-                  minWidth: MediaQuery.of(context).size.width,
                 ),
               ),
             ),

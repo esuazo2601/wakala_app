@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "765303115201",
+    "project_id": "wakala-45dad",
+    "storage_bucket": "wakala-45dad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765303115201:android:0118c20ddae9672377f340",
+        "android_client_info": {
+          "package_name": "com.example.wakala_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpobRt7r8GcbsKjmeInM-PvcNHBaG4iBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
