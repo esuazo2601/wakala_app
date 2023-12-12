@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wakala_app/color_palette.dart';
 import 'package:wakala_app/firebase/firestore.dart';
 //import 'package:wakala_app/models/models.dart';
 import 'package:wakala_app/wakalas_list.dart';
@@ -18,27 +19,26 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffffffff),
+      backgroundColor: backGroundColor,
       body: Align(
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                ///***If you have exported images you must have to copy those images in assets/images directory.
                 const Image(
                   image: AssetImage(
                       "assets/images/mordecai_disgusted_face_hd_by_elsnourai_ddi3fgw.jpg"),
-                  height: 100,
-                  width: 180,
+                  height: 250,
+                  width: 380,
                   fit: BoxFit.cover,
                 ),
                 const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 30),
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Text(
                     "WAKALA 1.0",
                     textAlign: TextAlign.start,
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.normal,
                       fontSize: 20,
-                      color: Color(0xff3a57e8),
+                      color: topColor,
                     ),
                   ),
                 ),
@@ -63,30 +63,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontSize: 16,
-                      color: Color(0xff000000),
+                      color: textColor,
                     ),
                     decoration: InputDecoration(
                       disabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff9e9e9e), width: 1),
+                        borderSide:
+                            const BorderSide(color: textColor, width: 1),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff9e9e9e), width: 1),
+                        borderSide:
+                            const BorderSide(color: textColor, width: 1),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff9e9e9e), width: 1),
+                        borderSide:
+                            const BorderSide(color: textColor, width: 1),
                       ),
                       labelText: "Usuario",
                       labelStyle: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
                         fontSize: 16,
-                        color: Color(0xff9e9e9e),
+                        color: textColor,
                       ),
                       filled: true,
                       fillColor: const Color(0x00f2f2f3),
@@ -105,30 +105,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.normal,
                     fontSize: 16,
-                    color: Color(0xff000000),
+                    color: textColor,
                   ),
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: const BorderSide(color: textColor, width: 1),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: const BorderSide(color: textColor, width: 1),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(color: Color(0xff9e9e9e), width: 1),
+                      borderSide: const BorderSide(color: textColor, width: 1),
                     ),
                     labelText: "Password",
                     labelStyle: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontSize: 16,
-                      color: Color(0xff9e9e9e),
+                      color: textColor,
                     ),
                     filled: true,
                     fillColor: const Color(0x00f2f2f3),
@@ -153,26 +150,41 @@ class _LoginScreenState extends State<LoginScreen> {
                           alignment: Alignment.center,
                           child: MaterialButton(
                             onPressed: () async {
-                              BuildContext currentContext =
-                                  context; // Almacena el contexto actual
-
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const AlertDialog(
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          CircularProgressIndicator(),
+                                          SizedBox(height: 16),
+                                          Text("Iniciando Sesion")
+                                        ],
+                                      ),
+                                    );
+                                  });
                               bool loginSuccess = await handleLogin(
                                   _userController.text,
                                   _passwordController.text);
-
+                              Navigator.pop(context);
                               if (loginSuccess) {
-                                Navigator.pop(currentContext);
+                                // Navegar a la siguiente pantalla
                                 Navigator.push(
-                                  currentContext,
+                                  context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const WakalasList()),
+                                      builder: (context) => WakalasList()),
                                 );
                               } else {
-                                print("Error");
+                                MotionToast.error(
+                                        title: const Text(
+                                            "Error al iniciar sesion"),
+                                        description: const Text(
+                                            "Usuario o contraseña incorrectos"))
+                                    .show(context);
                               }
                             },
-                            color: const Color(0xff3a57e8),
+                            color: const Color(0xff31304D),
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0),
@@ -201,11 +213,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: MediaQuery.of(context).size.width * 0.5,
                   height: MediaQuery.of(context).size.width * 0.3,
                   decoration: BoxDecoration(
-                    color: const Color(0x1f000000),
+                    color: backGroundColor,
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(5.0),
-                    border:
-                        Border.all(color: const Color(0x7b000000), width: 2),
+                    border: Border.all(color: textColor, width: 2),
                   ),
                   child: const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -219,10 +230,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           textAlign: TextAlign.start,
                           overflow: TextOverflow.clip,
                           style: TextStyle(
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.italic,
                             fontSize: 16,
-                            color: Color(0xff000000),
+                            color: textColor,
                           ),
                         ),
                       ),
