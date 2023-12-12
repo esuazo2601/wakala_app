@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wakala_app/color_palette.dart';
 import 'package:wakala_app/login_screen.dart';
 import 'package:wakala_app/models/models.dart';
+import 'package:wakala_app/new_wakala.dart';
 import 'package:wakala_app/wakala.dart';
 import 'package:wakala_app/firebase/firestore.dart';
 
@@ -13,56 +14,6 @@ class WakalasList extends StatefulWidget {
 }
 
 class _WakalasListState extends State<WakalasList> {
-  late List<Wakala> wakalaList;
-  late List<PublicacionesModel> publicaciones;
-
-  // getPub() async {
-  //   publicaciones = await getPublicaciones();
-  //   wakalaList = publicaciones
-  //       .map((publicacion) => Wakala(publicacion: publicacion))
-  //       .toList();
-  //   setState(() {});
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   wakalaList = [];
-  //   publicaciones = [];
-  //   getPub();
-  // }
-
-  Widget buildWakalasList() {
-    return FutureBuilder<List<PublicacionesModel>>(
-      future: getPublicaciones(),
-      builder: (BuildContext context,
-          AsyncSnapshot<List<PublicacionesModel>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // Mientras está en progreso la obtención de datos
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          // Si hay un error
-          return Text('Error: ${snapshot.error}');
-        } else {
-          // Cuando la operación ha sido completada exitosamente
-          List<Wakala> wakalaList = snapshot.data!
-              .map((publicacion) => Wakala(publicacion: publicacion))
-              .toList();
-
-          return ListView.builder(
-            itemCount: wakalaList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                title: Text(wakalaList[index].toString()),
-                // Otros elementos de tu lista
-              );
-            },
-          );
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +57,23 @@ class _WakalasListState extends State<WakalasList> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              buildWakalasList(),
+              FutureBuilder(
+                future: getPublicaciones(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Wakala(publicacion: snapshot.data![index]);
+                      },
+                    );
+                  }
+                },
+              ),
               Align(
                 alignment: Alignment.center,
                 child: Padding(
@@ -125,8 +92,11 @@ class _WakalasListState extends State<WakalasList> {
                                   color: topColor, shape: CircleBorder()),
                               child: IconButton(
                                 icon: const Icon(Icons.add),
-                                onPressed: () async {
-                                  getPublicaciones();
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => NewWakala()));
                                 },
                                 color: backGroundColor,
                                 iconSize: 30,

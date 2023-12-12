@@ -48,7 +48,6 @@ Future<List<PublicacionesModel>> getPublicaciones() async {
           foto2: publicacion.data()["Foto 2"],
           titulo: publicacion.data()["Titulo"]));
     }
-    print(publicaciones);
     return publicaciones;
   } catch (error) {
     // Maneja el error si es necesario
