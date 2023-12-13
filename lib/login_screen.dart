@@ -4,6 +4,7 @@ import 'package:wakala_app/firebase/firestore.dart';
 //import 'package:wakala_app/models/models.dart';
 import 'package:wakala_app/wakalas_list.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -167,9 +168,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               bool loginSuccess = await handleLogin(
                                   _userController.text,
                                   _passwordController.text);
-                              Navigator.pop(context);
                               if (loginSuccess) {
                                 // Navegar a la siguiente pantalla
+                                Navigator.pop(context);
+                                Navigator.pop(context);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

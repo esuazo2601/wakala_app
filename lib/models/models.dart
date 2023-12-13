@@ -43,6 +43,35 @@ class PublicacionesModel {
   }
 }
 
+class PostPublicacionModel {
+  final DocumentReference autor;
+  final String descripcion;
+  final Timestamp fecha;
+  final String foto1;
+  final String foto2;
+  final String titulo;
+
+  const PostPublicacionModel({
+    required this.autor,
+    required this.descripcion,
+    required this.fecha,
+    required this.foto1,
+    required this.foto2,
+    required this.titulo,
+  });
+
+  toJson() {
+    return {
+      "Autor": autor,
+      "Descripcion": descripcion,
+      "Fecha": fecha,
+      "Foto 1": foto1,
+      "Foto 2": foto2,
+      "Titulo": titulo
+    };
+  }
+}
+
 class SigueAhiModel {
   final Map<String, bool> presionados;
 

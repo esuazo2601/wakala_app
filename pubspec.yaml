@@ -39,6 +39,7 @@ dependencies:
   cloud_firestore: ^4.13.5
   motion_toast: ^2.7.10
   intl: ^0.19.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
