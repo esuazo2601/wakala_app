@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wakala_app/color_palette.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
+import 'dart:io';
+import 'package:wakala_app/utils.dart';
 
 class NewWakala extends StatefulWidget {
   const NewWakala({super.key});
@@ -11,6 +15,19 @@ class NewWakala extends StatefulWidget {
 class _NewWakalaState extends State<NewWakala> {
   final _sectorController = TextEditingController();
   final _descripcionController = TextEditingController();
+  File? image1;
+  File? image2;
+  String? imagePath1;
+  String? imagePath2;
+
+  void pickMedia(ImageSource source, String? imagePath) async {
+    XFile? file;
+    file = await ImagePicker().pickImage(source: source);
+    if (file != null) {
+      imagePath = file.path;
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +225,9 @@ class _NewWakalaState extends State<NewWakala> {
                       padding: const EdgeInsets.fromLTRB(0, 0, 18, 0),
                       child: IconButton(
                         icon: const Icon(Icons.photo_camera),
-                        onPressed: () {},
+                        onPressed: () {
+                          pickMedia(ImageSource.gallery, imagePath1);
+                        },
                         color: const Color(0xff212435),
                         iconSize: 100,
                       ),
@@ -308,7 +327,8 @@ class _NewWakalaState extends State<NewWakala> {
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: Color(0xff000000), width: 1),
+                      side:
+                          const BorderSide(color: Color(0xff000000), width: 1),
                     ),
                     padding: const EdgeInsets.all(16),
                     textColor: containerColor,
