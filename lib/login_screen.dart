@@ -170,12 +170,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _passwordController.text);
                               if (loginSuccess) {
                                 // Navegar a la siguiente pantalla
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => WakalasList()),
+                                      builder: (context) =>
+                                          const WakalasList()),
                                 );
                               } else {
                                 MotionToast.error(

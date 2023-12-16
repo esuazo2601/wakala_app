@@ -140,7 +140,9 @@ class NewComment extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       color: const Color(0xffffffff),
                       elevation: 0,
                       shape: const RoundedRectangleBorder(

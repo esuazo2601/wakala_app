@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wakala_app/Detalles.dart';
 import 'package:wakala_app/color_palette.dart';
 import 'package:wakala_app/models/models.dart';
 import 'package:intl/intl.dart';
@@ -68,7 +69,14 @@ class Wakala extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => Detalles(
+                                          publicacion: publicacion,
+                                        ))));
+                          },
                           icon: const Icon(Icons.arrow_forward_ios, size: 20)),
                     ],
                   ),
@@ -82,7 +90,7 @@ class Wakala extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            DateFormat('yyyy-MM-dd')
+                            DateFormat('dd-MM-yyyy')
                                 .format(publicacion.fecha.toDate()),
                             textAlign: TextAlign.start,
                             maxLines: 1,
