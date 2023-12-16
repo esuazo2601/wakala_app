@@ -2,9 +2,20 @@
 
 import 'package:flutter/material.dart';
 
-class Detalles extends StatelessWidget {
-  const Detalles({super.key});
+class Detalles extends StatefulWidget {
+  const Detalles({
+    super.key,
+    String? titulo,
+    String? descripcion,
+    String? foto1,
+    String? foto2,
+  });
 
+  @override
+  State<Detalles> createState() => _DetallesState();
+}
+
+class _DetallesState extends State<Detalles> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -223,7 +234,8 @@ class Detalles extends StatelessWidget {
                         color: const Color(0x00000000),
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.zero,
-                        border: Border.all(color: const Color(0x4d9e9e9e), width: 1),
+                        border: Border.all(
+                            color: const Color(0x4d9e9e9e), width: 1),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
