@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:wakala_app/color_palette.dart';
+import 'package:wakala_app/comentario.dart';
 import 'package:wakala_app/models/models.dart';
 import 'package:intl/intl.dart';
 import 'package:wakala_app/new_comment.dart';
@@ -65,15 +68,15 @@ class _DetallesState extends State<Detalles> {
                           Image(
                             image: NetworkImage(
                                 "https://picsum.photos/250?image=9"),
-                            height: 100,
-                            width: 100,
+                            height: 150,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             fit: BoxFit.contain,
                           ),
                           Image(
                             image: NetworkImage(
                                 "https://picsum.photos/250?image=9"),
-                            height: 100,
-                            width: 100,
+                            height: 150,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             fit: BoxFit.contain,
                           ),
                         ],
@@ -180,74 +183,77 @@ class _DetallesState extends State<Detalles> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.all(0),
-                        padding: const EdgeInsets.all(0),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        decoration: BoxDecoration(
-                          color: const Color(0x00000000),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.zero,
-                          border: Border.all(color: textColor, width: 1),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    "Comentarios",
-                                    textAlign: TextAlign.start,
-                                    overflow: TextOverflow.clip,
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                  "Comentarios",
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.clip,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FontStyle.normal,
+                                    fontSize: 16,
+                                    color: textColor,
+                                  ),
+                                ),
+                                MaterialButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                NewComment()));
+                                  },
+                                  color: topColor,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    side: const BorderSide(
+                                        color: textColor, width: 2),
+                                  ),
+                                  padding: const EdgeInsets.all(16),
+                                  textColor: const Color(0xff000000),
+                                  height: 40,
+                                  minWidth:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  child: const Text(
+                                    "Comentar",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontStyle: FontStyle.normal,
-                                      fontSize: 16,
-                                      color: textColor,
-                                    ),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.normal,
+                                        color: containerColor),
                                   ),
-                                  MaterialButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  NewComment()));
-                                    },
-                                    color: topColor,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      side: const BorderSide(
-                                          color: textColor, width: 2),
-                                    ),
-                                    padding: const EdgeInsets.all(16),
-                                    textColor: const Color(0xff000000),
-                                    height: 40,
-                                    minWidth:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    child: const Text(
-                                      "Comentar",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          fontStyle: FontStyle.normal,
-                                          color: containerColor),
-                                    ),
-                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              padding: EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: textColor, width: 3),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                              ),
+                              child: const Column(
+                                children: [
+                                  Comentario(),
+                                  Comentario(),
+                                  Comentario()
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

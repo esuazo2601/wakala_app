@@ -6,7 +6,8 @@ import 'package:intl/intl.dart';
 
 class Wakala extends StatelessWidget {
   final PublicacionesModel publicacion;
-  const Wakala({super.key, required this.publicacion});
+
+  const Wakala({Key? key, required this.publicacion}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +16,11 @@ class Wakala extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(12, 0, 0, 2),
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 243, 242, 241),
-        shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(12.0),
         border: Border.all(color: textColor, width: 1),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
         children: [
           const Icon(
             Icons.article,
@@ -30,101 +28,64 @@ class Wakala extends StatelessWidget {
             size: 50,
           ),
           Expanded(
-            flex: 1,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
-                        flex: 1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Text(
-                                publicacion.titulo,
-                                textAlign: TextAlign.start,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontStyle: FontStyle.normal,
-                                  fontSize: 16,
-                                  color: textColor,
-                                ),
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          publicacion.titulo,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: textColor,
+                          ),
                         ),
                       ),
                       IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => Detalles(
-                                          publicacion: publicacion,
-                                        ))));
-                          },
-                          icon: const Icon(Icons.arrow_forward_ios, size: 20)),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: ((context) => Detalles(
+                                    publicacion: publicacion,
+                                  )),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.arrow_forward_ios, size: 20),
+                      ),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            DateFormat('dd-MM-yyyy')
-                                .format(publicacion.fecha.toDate()),
-                            textAlign: TextAlign.start,
-                            maxLines: 1,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 14,
-                              color: Color(0xff393939),
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      DateFormat('dd-MM-yyyy')
+                          .format(publicacion.fecha.toDate()),
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: const Color(0xff393939),
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          "Por: @${publicacion.autor}",
-                          textAlign: TextAlign.start,
-                          overflow: TextOverflow.clip,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14,
-                            color: Color(0xff000000),
-                          ),
-                        ),
-                      ],
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      "Por: @${publicacion.autor}",
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: Color(0xff000000),
+                      ),
                     ),
                   ),
                 ],
