@@ -19,12 +19,53 @@ class _NewWakalaState extends State<NewWakala> {
   String? imagePath1;
   String? imagePath2;
 
-  Future<String?> pickMedia(ImageSource source) async {
+  Future<String?> _showImageSourceDialog() async {
+    return await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Seleccionar fuente de imagen"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.camera),
+                title: const Text("Cámara"),
+                onTap: () {
+                  Navigator.pop(context, 'camera');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.image),
+                title: const Text("Galería"),
+                onTap: () {
+                  Navigator.pop(context, 'gallery');
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<String?> pickMedia() async {
+    String? source = await _showImageSourceDialog();
+    if (source == null) {
+      return null;
+    }
+
     XFile? file;
-    file = await ImagePicker().pickImage(source: source);
+    if (source == 'camera') {
+      file = await ImagePicker().pickImage(source: ImageSource.camera);
+    } else {
+      file = await ImagePicker().pickImage(source: ImageSource.gallery);
+    }
+
     if (file != null) {
       return file.path;
     }
+
     return null;
   }
 
@@ -224,8 +265,7 @@ class _NewWakalaState extends State<NewWakala> {
                       padding: const EdgeInsets.fromLTRB(10, 0, 15, 10),
                       child: InkWell(
                         onTap: () async {
-                          String? imagePath =
-                              await pickMedia(ImageSource.gallery);
+                          String? imagePath = await pickMedia();
                           if (imagePath != null) {
                             setState(() {
                               imagePath1 = imagePath;
@@ -260,8 +300,7 @@ class _NewWakalaState extends State<NewWakala> {
                       padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
                       child: InkWell(
                         onTap: () async {
-                          String? imagePath =
-                              await pickMedia(ImageSource.gallery);
+                          String? imagePath = await pickMedia();
                           if (imagePath != null) {
                             setState(() {
                               imagePath2 = imagePath;
