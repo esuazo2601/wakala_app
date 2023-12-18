@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:wakala_app/color_palette.dart';
 import 'package:wakala_app/comentario.dart';
@@ -9,9 +7,9 @@ import 'package:wakala_app/new_comment.dart';
 
 class Detalles extends StatefulWidget {
   const Detalles({
-    Key? key,
+    super.key,
     required this.publicacion,
-  }) : super(key: key);
+  });
   final PublicacionesModel publicacion;
 
   @override
@@ -28,18 +26,18 @@ class _DetallesState extends State<Detalles> {
         centerTitle: false,
         automaticallyImplyLeading: false,
         backgroundColor: topColor,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
         title: Text(
           widget.publicacion.titulo,
-          style: TextStyle(color: containerColor, fontWeight: FontWeight.w600),
+          style: const TextStyle(color: containerColor, fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               size: 20,
               color: containerColor,
@@ -53,7 +51,7 @@ class _DetallesState extends State<Detalles> {
             alignment: Alignment.topLeft,
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 80),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -66,14 +64,14 @@ class _DetallesState extends State<Detalles> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Image(
-                            image: NetworkImage(
+                            image: const NetworkImage(
                                 "https://picsum.photos/250?image=9"),
                             height: 150,
                             width: MediaQuery.of(context).size.width * 0.4,
                             fit: BoxFit.contain,
                           ),
                           Image(
-                            image: NetworkImage(
+                            image: const NetworkImage(
                                 "https://picsum.photos/250?image=9"),
                             height: 150,
                             width: MediaQuery.of(context).size.width * 0.4,
@@ -83,14 +81,14 @@ class _DetallesState extends State<Detalles> {
                       ),
                       Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                            const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                               child: Text(
                                 "Por @${widget.publicacion.autor} |",
                                 textAlign: TextAlign.start,
@@ -119,10 +117,10 @@ class _DetallesState extends State<Detalles> {
                         ),
                       ),
                       Text(
-                        "${widget.publicacion.descripcion}",
+                        widget.publicacion.descripcion,
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.clip,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontStyle: FontStyle.normal,
                           fontSize: 20,
@@ -195,7 +193,7 @@ class _DetallesState extends State<Detalles> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Text(
+                                const Text(
                                   "Comentarios",
                                   textAlign: TextAlign.start,
                                   overflow: TextOverflow.clip,
@@ -212,7 +210,7 @@ class _DetallesState extends State<Detalles> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                NewComment()));
+                                                const NewComment()));
                                   },
                                   color: topColor,
                                   elevation: 0,
@@ -238,12 +236,12 @@ class _DetallesState extends State<Detalles> {
                               ],
                             ),
                             Container(
-                              margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              padding: EdgeInsets.all(12),
+                              margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 border: Border.all(color: textColor, width: 3),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+                                    const BorderRadius.all(Radius.circular(20)),
                               ),
                               child: const Column(
                                 children: [

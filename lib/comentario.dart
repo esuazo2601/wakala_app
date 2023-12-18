@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wakala_app/color_palette.dart';
 
 class Comentario extends StatelessWidget {
-  const Comentario({Key? key});
+  const Comentario({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class Comentario extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.12,
       decoration: BoxDecoration(
         border: Border.all(color: bottomColor, width: 3),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
         color: topColor,
       ),
       child: const Padding(
@@ -53,7 +53,7 @@ class Comentario extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                  padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
                   child: Text(
                     "por @user",
                     textAlign: TextAlign.justify,

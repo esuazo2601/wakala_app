@@ -21,14 +21,14 @@ void main() async {
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  const MyApp({required this.isLoggedIn});
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'FlutterViz Demo',
-      home: isLoggedIn ? WakalasList() : LoginScreen(),
+      home: isLoggedIn ? const WakalasList() : const LoginScreen(),
     );
   }
 }

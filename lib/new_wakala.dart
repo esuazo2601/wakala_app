@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wakala_app/color_palette.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_native_image/flutter_native_image.dart';
-import 'dart:io';
 import 'package:wakala_app/utils.dart';
+import 'dart:io';
 
 class NewWakala extends StatefulWidget {
   const NewWakala({super.key});
@@ -20,13 +19,13 @@ class _NewWakalaState extends State<NewWakala> {
   String? imagePath1;
   String? imagePath2;
 
-  void pickMedia(ImageSource source, String? imagePath) async {
+  Future<String?> pickMedia(ImageSource source) async {
     XFile? file;
     file = await ImagePicker().pickImage(source: source);
     if (file != null) {
-      imagePath = file.path;
-      setState(() {});
+      return file.path;
     }
+    return null;
   }
 
   @override
@@ -222,14 +221,32 @@ class _NewWakalaState extends State<NewWakala> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 18, 0),
-                      child: IconButton(
-                        icon: const Icon(Icons.photo_camera),
-                        onPressed: () {
-                          pickMedia(ImageSource.gallery, imagePath1);
+                      padding: const EdgeInsets.fromLTRB(10, 0, 15, 10),
+                      child: InkWell(
+                        onTap: () async {
+                          String? imagePath =
+                              await pickMedia(ImageSource.gallery);
+                          if (imagePath != null) {
+                            setState(() {
+                              imagePath1 = imagePath;
+                            });
+                          }
                         },
-                        color: const Color(0xff212435),
-                        iconSize: 100,
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: const Color(0xff212435),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: imagePath1 != null
+                              ? Image.file(
+                                  File(imagePath1!),
+                                  fit: BoxFit.cover,
+                                )
+                              : const Icon(Icons.photo_camera,
+                                  color: Colors.white, size: 40),
+                        ),
                       ),
                     ),
                   ],
@@ -239,11 +256,34 @@ class _NewWakalaState extends State<NewWakala> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.photo_camera),
-                      onPressed: () {},
-                      color: const Color(0xff212435),
-                      iconSize: 100,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
+                      child: InkWell(
+                        onTap: () async {
+                          String? imagePath =
+                              await pickMedia(ImageSource.gallery);
+                          if (imagePath != null) {
+                            setState(() {
+                              imagePath2 = imagePath;
+                            });
+                          }
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: const Color(0xff212435),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: imagePath2 != null
+                              ? Image.file(
+                                  File(imagePath2!),
+                                  fit: BoxFit.cover,
+                                )
+                              : const Icon(Icons.photo_camera,
+                                  color: Colors.white, size: 40),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -260,7 +300,11 @@ class _NewWakalaState extends State<NewWakala> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          imagePath1 = null;
+                        });
+                      },
                       color: topColor,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -289,7 +333,11 @@ class _NewWakalaState extends State<NewWakala> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          imagePath2 = null;
+                        });
+                      },
                       color: topColor,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -357,11 +405,11 @@ class _NewWakalaState extends State<NewWakala> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    color: Color(0xffA52228),
+                    color: const Color(0xffA52228),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),
-                      side: BorderSide(color: topColor, width: 3),
+                      side: const BorderSide(color: topColor, width: 3),
                     ),
                     padding: const EdgeInsets.all(16),
                     textColor: containerColor,

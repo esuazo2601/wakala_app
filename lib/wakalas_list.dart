@@ -128,7 +128,7 @@ class _WakalasListState extends State<WakalasList> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => NewWakala()));
+                                  builder: (context) => const NewWakala()));
                         },
                         color: backGroundColor,
                         iconSize: 50,

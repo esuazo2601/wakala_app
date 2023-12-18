@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wakala_app/Detalles.dart';
+import 'package:wakala_app/detalles.dart';
 import 'package:wakala_app/color_palette.dart';
 import 'package:wakala_app/models/models.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class Wakala extends StatelessWidget {
   final PublicacionesModel publicacion;
 
-  const Wakala({Key? key, required this.publicacion}) : super(key: key);
+  const Wakala({super.key, required this.publicacion});
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +69,10 @@ class Wakala extends StatelessWidget {
                           .format(publicacion.fecha.toDate()),
                       maxLines: 1,
                       overflow: TextOverflow.clip,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: const Color(0xff393939),
+                        color: Color(0xff393939),
                       ),
                     ),
                   ),
