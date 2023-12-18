@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wakala_app/color_palette.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wakala_app/firebase/firestore.dart';
 import 'package:wakala_app/utils.dart';
 import 'package:wakala_app/color_palette.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'models/models.dart';
 import 'dart:io';
 
 class NewWakala extends StatefulWidget {
@@ -21,7 +25,7 @@ class _NewWakalaState extends State<NewWakala> {
   File? image2;
   String? imagePath1;
   String? imagePath2;
-
+  late SharedPreferences prefs;
   Future<String?> _showImageSourceDialog() async {
     return await showDialog<String>(
       context: context,
@@ -75,6 +79,47 @@ class _NewWakalaState extends State<NewWakala> {
     }
 
     return null;
+  }
+
+  Future<void> publicarWakala() async {
+    final String idAutor = await prefs.getString('id') ?? "";
+    final DocumentReference Autor = await getReferencia(idAutor);
+    String base64Image1 = await toBase64C(imagePath1!);
+    String base64Image2 =
+        imagePath2 != null ? await toBase64C(imagePath2!) : "";
+    PostPublicacionModel publicacion = PostPublicacionModel(
+        autor: Autor,
+        descripcion: _descripcionController.text,
+        fecha: Timestamp.now(),
+        foto1: base64Image1,
+        foto2: base64Image2 ?? "",
+        titulo: _sectorController.text);
+    try {
+      // Llamar a la función postPublicacion
+      await postPublicacion(publicacion);
+
+      // Mostrar un mensaje de éxito
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Publicación exitosa")));
+
+      // Puedes realizar cualquier otra acción después de una publicación exitosa
+    } catch (error) {
+      print("Error al publicar: $error");
+      // Mostrar un mensaje de error en caso de problemas
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Error al publicar")));
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
   }
 
   @override
@@ -433,7 +478,7 @@ class _NewWakalaState extends State<NewWakala> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     MaterialButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (!_formKey.currentState!.validate()) {
                           print("complete los campos faltantes");
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -449,6 +494,8 @@ class _NewWakalaState extends State<NewWakala> {
                                       Text("Debe subir al menos la Foto 1")));
                           return;
                         } else {
+                          print(prefs.getString('id'));
+                          await publicarWakala();
                           print("validado con éxito");
                         }
                       },
