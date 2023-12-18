@@ -66,3 +66,11 @@ Future<void> postPublicacion(PostPublicacionModel publicacion) async {
   db.collection("Publicaciones").add(data).then(
       (DocumentSnapshot) => print("Añadido prro ID: ${DocumentSnapshot.id}"));
 }
+
+Future<DocumentReference> getReferencia(String id) async {
+  DocumentReference autorRef = FirebaseFirestore.instance
+      .collection(
+          "Usuarios") // Reemplaza con el nombre de tu colección de usuarios
+      .doc(id);
+  return autorRef;
+}
