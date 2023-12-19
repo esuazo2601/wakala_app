@@ -25,13 +25,18 @@ class Detalles extends StatefulWidget {
 class _DetallesState extends State<Detalles> {
   int sigueAhiCount = 0;
   int yaNoEstaCount = 0;
+
   late SharedPreferences prefs;
+
+  late Future<List<Comentarios>> comentariosFuture;
+
   @override
   void initState() {
     super.initState();
     obtenerSharedPreferences();
     // Llamada a la función para obtener los contadores
     obtenerContadores();
+    comentariosFuture = obtenerComentarios(widget.publicacion.id ?? '');
   }
 
   Future<void> obtenerSharedPreferences() async {
@@ -329,12 +334,24 @@ class _DetallesState extends State<Detalles> {
                                   ),
                                 ),
                                 MaterialButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const NewComment()));
+                                  onPressed: () async {
+                                    bool comentarioAgregado =
+                                        await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => NewComment(
+                                            publicacion: widget.publicacion),
+                                      ),
+                                    );
+
+                                    // Actualiza Detalles si el comentario se agregó correctamente
+                                    if (comentarioAgregado == true) {
+                                      setState(() {
+                                        comentariosFuture = obtenerComentarios(
+                                            widget.publicacion.id ?? '');
+                                        // También puedes realizar otras actualizaciones según sea necesario
+                                      });
+                                    }
                                   },
                                   color: topColor,
                                   elevation: 0,
@@ -359,21 +376,26 @@ class _DetallesState extends State<Detalles> {
                                 ),
                               ],
                             ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: textColor, width: 3),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(20)),
-                              ),
-                              child: const Column(
-                                children: [
-                                  Comentario(),
-                                  Comentario(),
-                                  Comentario()
-                                ],
-                              ),
+                            FutureBuilder<List<Comentarios>>(
+                              future: comentariosFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const CircularProgressIndicator(); // Muestra un indicador de carga mientras se obtienen los comentarios
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else {
+                                  List<Comentarios> comentarios =
+                                      snapshot.data ?? [];
+
+                                  // Aquí puedes usar la lista de comentarios para construir tus widgets
+                                  return Column(
+                                    children: comentarios.map((comentario) {
+                                      return Comentario(comentario: comentario);
+                                    }).toList(),
+                                  );
+                                }
+                              },
                             ),
                           ],
                         ),

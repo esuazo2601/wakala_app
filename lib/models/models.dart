@@ -30,6 +30,7 @@ class PublicacionesModel {
   final String foto2;
   final String titulo;
   String? id;
+  List<Comentarios> comentarios;
   PublicacionesModel(
       {required this.autor,
       required this.descripcion,
@@ -37,7 +38,8 @@ class PublicacionesModel {
       required this.foto1,
       required this.foto2,
       required this.titulo,
-      this.id});
+      this.id,
+      required this.comentarios});
 
   toJson() {
     return {
@@ -58,15 +60,15 @@ class PostPublicacionModel {
   final String foto1;
   final String foto2;
   final String titulo;
-
-  const PostPublicacionModel({
-    required this.autor,
-    required this.descripcion,
-    required this.fecha,
-    required this.foto1,
-    required this.foto2,
-    required this.titulo,
-  });
+  final List<Comentarios> comentarios;
+  const PostPublicacionModel(
+      {required this.autor,
+      required this.descripcion,
+      required this.fecha,
+      required this.foto1,
+      required this.foto2,
+      required this.titulo,
+      required this.comentarios});
 
   toJson() {
     return {
@@ -106,16 +108,19 @@ class SigueAhiModel {
 class Comentarios {
   final String autor;
   final String contenido;
-
-  const Comentarios({
-    required this.autor,
-    required this.contenido,
-  });
+  final String refAutor;
+  const Comentarios(
+      {required this.autor, required this.contenido, required this.refAutor});
 
   toJson() {
-    return {
-      "Autor": autor,
-      "Contenido": contenido,
-    };
+    return {"Autor": autor, "Contenido": contenido, "RefAutor": refAutor};
+  }
+
+  factory Comentarios.fromJson(Map<String, dynamic> json) {
+    return Comentarios(
+      autor: json['autor'] ?? '',
+      contenido: json['contenido'] ?? '',
+      refAutor: json['refAutor'] ?? '',
+    );
   }
 }

@@ -6,14 +6,14 @@ import 'package:wakala_app/models/models.dart';
 
 final db = FirebaseFirestore.instance;
 
-Future<void> getUsers() async {
-  final data = db.collection("Usuarios");
-  await data.get().then((querySnapshot) {
-    for (var query in querySnapshot.docs) {
-      print('${query.id} => ${query.data()}');
-    }
-  });
-}
+// Future<void> getUsers() async {
+//   final data = db.collection("Usuarios");
+//   await data.get().then((querySnapshot) {
+//     for (var query in querySnapshot.docs) {
+//       //print('${query.id} => ${query.data()}');
+//     }
+//   });
+// }
 
 Future<bool> handleLogin(String user, String password) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -23,10 +23,10 @@ Future<bool> handleLogin(String user, String password) async {
       .where("password", isEqualTo: password)
       .get();
   if (snapshot.docs.isEmpty) {
-    print("error en logearse");
+    //print("error en logearse");
     return false;
   } else {
-    print("logeado con éxito :D");
+    //print("logeado con éxito :D");
     await prefs.setString("id", snapshot.docs[0].id);
     await prefs.setString("nombre", snapshot.docs[0].data()["nombre"]);
     await prefs.setBool("isLoggedIn", true);
@@ -35,7 +35,7 @@ Future<bool> handleLogin(String user, String password) async {
 }
 
 Future<List<PublicacionesModel>> getPublicaciones() async {
-  print("LLamando a las publis");
+  //print("LLamando a las publis");
   List<PublicacionesModel> publicaciones = [];
   try {
     var queryData = await db.collection("Publicaciones").get();
@@ -45,6 +45,16 @@ Future<List<PublicacionesModel>> getPublicaciones() async {
       var idAutor = publicacion.data()['Autor'];
       var usuarioDoc = await db.collection("Usuarios").doc(idAutor.id).get();
       var nombre = usuarioDoc.data()?['nombre'];
+
+      // Recupera la lista de comentarios de la base de datos
+      var comentariosData = publicacion.data()["Comentarios"] ?? [];
+
+      // Convierte la lista de comentarios a instancias de la clase Comentarios
+      List<Comentarios> comentarios = comentariosData
+          .map<Comentarios>((dynamic comentario) =>
+              Comentarios.fromJson(comentario as Map<String, dynamic>))
+          .toList();
+
       publicaciones.add(PublicacionesModel(
           autor: nombre,
           descripcion: publicacion.data()["Descripcion"],
@@ -52,12 +62,13 @@ Future<List<PublicacionesModel>> getPublicaciones() async {
           foto1: publicacion.data()["Foto 1"],
           foto2: publicacion.data()["Foto 2"],
           titulo: publicacion.data()["Titulo"],
-          id: publicacion.id));
+          id: publicacion.id,
+          comentarios: comentarios));
     }
     return publicaciones;
   } catch (error) {
     // Maneja el error si es necesario
-    print(error);
+    //print("errore en tener publis :( $error");
     return publicaciones;
   }
 }
@@ -104,7 +115,7 @@ Future<Map<String, int>> actualizarContador(bool sigueAhi, String id) async {
     // Devolver los nuevos contadores
     return {'sigueAhiCount': sigueAhiCount, 'yaNoEstaCount': yaNoEstaCount};
   } catch (e) {
-    print('Error al actualizar los contadores: $e');
+    //print('Error al actualizar los contadores: $e');
     return {'sigueAhiCount': 0, 'yaNoEstaCount': 0};
   }
 }
@@ -115,10 +126,9 @@ Future<ContadorPublicacion> getContador(String id) async {
 
     if (publicacionDoc.exists) {
       // El documento existe, puedes acceder a los datos.
-      print("document $publicacionDoc");
-      var auto = publicacionDoc.data()?['Autor'];
-      print("data $auto");
-      print("data ${publicacionDoc.data()?['Descripcion']}");
+      //print("document $publicacionDoc");
+      //      //print("data $auto");
+      //print("data ${publicacionDoc.data()?['Descripcion']}");
 
       // Obtener los valores actuales de los contadores
       int sigueAhiCount = publicacionDoc.data()?['sigue_ahi'] ?? 0;
@@ -130,11 +140,65 @@ Future<ContadorPublicacion> getContador(String id) async {
       );
     } else {
       // El documento no existe.
-      print("El documento con ID $id no existe.");
+      //print("El documento con ID $id no existe.");
       return ContadorPublicacion(sigueAhiCount: 0, yaNoEstaCount: 0);
     }
   } catch (e) {
-    print("Error al recuperar el contador: $e");
+    //print("Error al recuperar el contador: $e");
     return ContadorPublicacion(sigueAhiCount: 0, yaNoEstaCount: 0);
+  }
+}
+
+Future<bool> addComentario(String idPublicacion, Comentarios comentario) async {
+  try {
+    // Obtén una referencia al documento de la publicación
+    DocumentReference publicacionRef =
+        db.collection('Publicaciones').doc(idPublicacion);
+    //print("referencia: $publicacionRef");
+    // Obtiene el documento actual de la publicación
+    DocumentSnapshot publicacionSnapshot = await publicacionRef.get();
+    //print("data $publicacionSnapshot");
+    // Verifica si la lista de comentarios ya existe
+    if (publicacionSnapshot.exists) {
+      var data = publicacionSnapshot.data() as Map<String, dynamic>?;
+      // La lista de comentarios ya existe, así que actualiza la lista con el nuevo comentario
+      var lista = data?['Comentarios'] ?? [];
+      lista.add(comentario.toJson());
+      //print("mi lista: $lista");
+      await publicacionRef.update({
+        'Comentarios': lista,
+      });
+      return true;
+    }
+  } catch (e) {
+    //print('Error al agregar comentario: $e');
+    return false;
+  }
+  return false;
+}
+
+Future<List<Comentarios>> obtenerComentarios(String idPublicacion) async {
+  try {
+    // Obtén una referencia al documento de la publicación
+    DocumentSnapshot publicacionSnapshot =
+        await db.collection('Publicaciones').doc(idPublicacion).get();
+    var data = publicacionSnapshot.data() as Map<String, dynamic>?;
+    // Obtén la lista de comentarios del documento
+    var comentariosData = data?['Comentarios'] ?? [];
+
+    // Convierte los datos en instancias de la clase Comentarios
+    //print("comentario $comentariosData");
+    List<Comentarios> comentarios =
+        comentariosData.map<Comentarios>((comentario) {
+      return Comentarios(
+          autor: comentario['Autor'],
+          contenido: comentario['Contenido'],
+          refAutor: comentario['RefAutor']);
+    }).toList();
+    //print("comentario lista $comentarios");
+    return comentarios;
+  } catch (e) {
+    //print('Error al obtener comentarios: $e');
+    return [];
   }
 }

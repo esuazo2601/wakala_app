@@ -2,10 +2,34 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakala_app/color_palette.dart';
+import 'package:wakala_app/firebase/firestore.dart';
+import 'package:wakala_app/models/models.dart';
 
-class NewComment extends StatelessWidget {
-  const NewComment({super.key, String? wakalaName});
+class NewComment extends StatefulWidget {
+  const NewComment({
+    super.key,
+    required this.publicacion,
+  });
+  final PublicacionesModel publicacion;
+  @override
+  State<NewComment> createState() => _NewCommentState();
+}
+
+class _NewCommentState extends State<NewComment> {
+  final _comentarioController = TextEditingController();
+  late SharedPreferences prefs;
+  @override
+  void initState() {
+    super.initState();
+    obtenerSharedPreferences();
+  }
+
+  Future<void> obtenerSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +54,7 @@ class NewComment extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
@@ -38,10 +62,10 @@ class NewComment extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
                       child: Text(
-                        "Dentro de (Nombre de wakala)",
+                        "Dentro de ${widget.publicacion.titulo}",
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.clip,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w800,
                           fontStyle: FontStyle.normal,
                           fontSize: 16,
@@ -64,7 +88,7 @@ class NewComment extends StatelessWidget {
                         Border.all(color: const Color(0x4d9e9e9e), width: 1),
                   ),
                   child: TextField(
-                    controller: TextEditingController(),
+                    controller: _comentarioController,
                     obscureText: false,
                     textAlign: TextAlign.start,
                     maxLines: 100,
@@ -113,7 +137,37 @@ class NewComment extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: MaterialButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (_comentarioController.text.isEmpty) {
+                            MotionToast.error(
+                              title: const Text("Debes ingresar un comentario"),
+                              description: const Text(
+                                  "Rellena el campo con tu comentario"),
+                            ).show(context);
+                            return;
+                          }
+                          Comentarios newComentario = Comentarios(
+                              autor: widget.publicacion.autor,
+                              contenido: _comentarioController.text,
+                              refAutor: prefs.getString('id') ?? '');
+                          if (await addComentario(
+                              widget.publicacion.id ?? '', newComentario)) {
+                            MotionToast.success(
+                              title: const Text("Éxito"),
+                              description: const Text(
+                                  "Comentario agregado correctamente"),
+                              toastDuration: Durations.extralong4,
+                            ).show(context);
+                            await Future.delayed(const Duration(seconds: 2));
+                            Navigator.pop(context, true);
+                          } else {
+                            MotionToast.error(
+                              title: const Text("error al crear comentario"),
+                              description:
+                                  const Text("ocurrio un error inesperado"),
+                            ).show(context);
+                          }
+                        },
                         color: topColor,
                         elevation: 0,
                         shape: RoundedRectangleBorder(

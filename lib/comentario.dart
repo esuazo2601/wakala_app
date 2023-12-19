@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:wakala_app/color_palette.dart';
+import 'package:wakala_app/models/models.dart';
 
-class Comentario extends StatelessWidget {
-  const Comentario({super.key});
+class Comentario extends StatefulWidget {
+  const Comentario({super.key, required this.comentario});
+  final Comentarios comentario;
+
+  @override
+  State<Comentario> createState() => _ComentarioState();
+}
+
+class _ComentarioState extends State<Comentario> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //print(widget.comentario.autor);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +30,8 @@ class Comentario extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         color: topColor,
       ),
-      child: const Padding(
-        padding: EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,13 +44,13 @@ class Comentario extends StatelessWidget {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                     child: Text(
-                      "lasdklasklaasdjkasdkjaskldjaskdjaskldjasldjaskldjlaskjdlasjkdlsakldjlakñsdjalkñdjaklñdjakljdklñasjdklajdkljaskldjakljdfklhasdkjfhaskdfhlñk",
+                      widget.comentario.contenido,
                       textAlign: TextAlign.start,
                       maxLines: 2, // Ajusta según sea necesario
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
                         fontSize: 14,
@@ -53,12 +67,12 @@ class Comentario extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                   child: Text(
-                    "por @user",
+                    "por @${widget.comentario.autor}",
                     textAlign: TextAlign.justify,
                     overflow: TextOverflow.clip,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
                       fontSize: 14,

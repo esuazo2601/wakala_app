@@ -4,7 +4,6 @@ import 'package:wakala_app/color_palette.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wakala_app/firebase/firestore.dart';
 import 'package:wakala_app/utils.dart';
-import 'package:wakala_app/color_palette.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/models.dart';
 import 'dart:io';
@@ -93,7 +92,8 @@ class _NewWakalaState extends State<NewWakala> {
         fecha: Timestamp.now(),
         foto1: base64Image1,
         foto2: base64Image2 ?? "",
-        titulo: _sectorController.text);
+        titulo: _sectorController.text,
+        comentarios: []);
     try {
       // Llamar a la función postPublicacion
       await postPublicacion(publicacion);
@@ -494,7 +494,7 @@ class _NewWakalaState extends State<NewWakala> {
                                       Text("Debe subir al menos la Foto 1")));
                           return;
                         } else {
-                          print(prefs.getString('id'));
+                          //print(prefs.getString('id'));
                           await publicarWakala();
                           Navigator.pop(context, true);
                           print("validado con éxito");
