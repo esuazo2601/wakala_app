@@ -10,9 +10,9 @@ El layout de las vistas principales fue realizado utilizando la plataforma de lo
 
 La base de datos fue realizada en Firebase y se realizaron las llamadas directamente desde Dart, los archivos asociados a esto se encuentran en la carpeta
 
-´´´
+```
 lib/firebase
-´´´
+```
 
 La cuenta se guarda mediante SharedPreferences, de modo que si has sido logueado anteriormente, la landing page será el listado de Wakalas, de lo contrario
 será enviado a la pantalla de login.
