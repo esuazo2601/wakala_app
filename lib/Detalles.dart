@@ -6,14 +6,20 @@ import 'package:wakala_app/comentario.dart';
 import 'package:wakala_app/models/models.dart';
 import 'package:intl/intl.dart';
 import 'package:wakala_app/new_comment.dart';
+<<<<<<< Updated upstream
 import 'dart:typed_data';
 import 'package:wakala_app/detalle_foto.dart';
+=======
+import 'package:wakala_app/utils.dart';
+import 'dart:typed_data';
+>>>>>>> Stashed changes
 
 class Detalles extends StatefulWidget {
   const Detalles({
     super.key,
     required this.publicacion,
   });
+
   final PublicacionesModel publicacion;
 
   @override
@@ -21,6 +27,7 @@ class Detalles extends StatefulWidget {
 }
 
 class _DetallesState extends State<Detalles> {
+<<<<<<< Updated upstream
   void show_image(String? base64String) {
     if (base64String != null && base64String.isNotEmpty) {
       try {
@@ -60,6 +67,34 @@ class _DetallesState extends State<Detalles> {
     );
   }
 
+=======
+  late ImageProvider img1;
+  late ImageProvider img2;
+
+  @override
+  void initState() {
+    super.initState();
+    img1 = MemoryImage(Uint8List.fromList(
+        [])); // Puedes usar una lista vacía como valor predeterminado
+    img2 = MemoryImage(Uint8List.fromList([]));
+    // Decodificar la imagen y almacenarla como cadena codificada en base64
+    _loadImage();
+    print(img1);
+  }
+
+  Future<void> _loadImage() async {
+    if (widget.publicacion.foto1.isNotEmpty &&
+        widget.publicacion.foto2.isNotEmpty) {
+      img1 = fromBase64C(widget.publicacion.foto1) ??
+          MemoryImage(Uint8List.fromList([]));
+      img2 = fromBase64C(widget.publicacion.foto2) ??
+          MemoryImage(Uint8List.fromList([]));
+      setState(() {});
+      setState(() {});
+    }
+  }
+
+>>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,6 +144,7 @@ class _DetallesState extends State<Detalles> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
+<<<<<<< Updated upstream
                           GestureDetector(
                             onTap: () => show_image(widget.publicacion.foto1),
                             child: createImage(widget.publicacion.foto1),
@@ -118,6 +154,22 @@ class _DetallesState extends State<Detalles> {
                               onTap: () => show_image(widget.publicacion.foto2),
                               child: createImage(widget.publicacion.foto2),
                             ),
+=======
+                          /*            if (img1 != null)
+                            Image(
+                              image: img1!,
+                              height: 150,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              fit: BoxFit.contain,
+                            ),
+                          if (img2 != null)
+                            Image(
+                              image: img2!,
+                              height: 150,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              fit: BoxFit.contain,
+                            ), */
+>>>>>>> Stashed changes
                         ],
                       ),
                       Padding(

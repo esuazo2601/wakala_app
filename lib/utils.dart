@@ -1,6 +1,8 @@
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
 
 Future<String> toBase64C(String ruta) async {
   if (ruta.isNotEmpty) {
@@ -15,5 +17,14 @@ Future<String> toBase64C(String ruta) async {
     return img64;
   } else {
     return "";
+  }
+}
+
+ImageProvider? fromBase64C(String base64String) {
+  if (base64String.isNotEmpty) {
+    List<int> bytes = base64Decode(base64String);
+    return MemoryImage(Uint8List.fromList(bytes));
+  } else {
+    return null;
   }
 }
