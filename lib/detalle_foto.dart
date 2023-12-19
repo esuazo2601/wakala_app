@@ -1,11 +1,20 @@
 ///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
 library;
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
-class DetalleFoto extends StatelessWidget {
-  const DetalleFoto({super.key});
+class DetalleFoto extends StatefulWidget {
+  final Uint8List imageBytes;
 
+  const DetalleFoto({super.key, required this.imageBytes});
+
+  @override
+  State<DetalleFoto> createState() => _DetalleFotoState();
+}
+
+class _DetalleFotoState extends State<DetalleFoto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,22 +48,19 @@ class DetalleFoto extends StatelessWidget {
           Container(
             margin: const EdgeInsets.all(0),
             padding: const EdgeInsets.all(0),
-            width: 250,
-            height: 250,
+            width: 500,
+            height: 500,
             decoration: BoxDecoration(
               color: const Color(0x1f000000),
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.zero,
               border: Border.all(color: const Color(0x4d9e9e9e), width: 1),
             ),
-            child:
-
-                ///***If you have exported images you must have to copy those images in assets/images directory.
-                Image(
-              image: const NetworkImage("https://picsum.photos/250?image=9"),
-              height: 100,
+            child: Image.memory(
+              widget.imageBytes,
+              height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
+              fit: BoxFit.scaleDown,
             ),
           ),
           Padding(
@@ -65,7 +71,9 @@ class DetalleFoto extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   color: const Color(0xffffffff),
                   elevation: 0,
                   shape: const RoundedRectangleBorder(

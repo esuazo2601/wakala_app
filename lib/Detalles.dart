@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:wakala_app/color_palette.dart';
 import 'package:wakala_app/comentario.dart';
 import 'package:wakala_app/models/models.dart';
 import 'package:intl/intl.dart';
 import 'package:wakala_app/new_comment.dart';
+import 'dart:typed_data';
+import 'package:wakala_app/detalle_foto.dart';
 
 class Detalles extends StatefulWidget {
   const Detalles({
@@ -17,6 +21,45 @@ class Detalles extends StatefulWidget {
 }
 
 class _DetallesState extends State<Detalles> {
+  void show_image(String? base64String) {
+    if (base64String != null && base64String.isNotEmpty) {
+      try {
+        List<int> bytes = base64.decode(base64String);
+        Uint8List imageBytes = Uint8List.fromList(bytes);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetalleFoto(imageBytes: imageBytes),
+          ),
+        );
+      } catch (e) {
+        print('Error al decodificar la imagen base64: $e');
+      }
+    }
+  }
+
+  Widget createImage(String? base64String) {
+    if (base64String != null && base64String.isNotEmpty) {
+      try {
+        List<int> bytes = base64.decode(base64String);
+        Uint8List imageBytes = Uint8List.fromList(bytes);
+
+        return Image.memory(
+          imageBytes,
+          height: 150,
+          width: MediaQuery.of(context).size.width * 0.4,
+          fit: BoxFit.contain,
+        );
+      } catch (e) {
+        print('Error al decodificar la imagen base64: $e');
+      }
+    }
+    return Container(
+      width: 0,
+      height: 0,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +74,8 @@ class _DetallesState extends State<Detalles> {
         ),
         title: Text(
           widget.publicacion.titulo,
-          style: const TextStyle(color: containerColor, fontWeight: FontWeight.w600),
+          style: const TextStyle(
+              color: containerColor, fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
             onPressed: () {
@@ -63,25 +107,21 @@ class _DetallesState extends State<Detalles> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Image(
-                            image: const NetworkImage(
-                                "https://picsum.photos/250?image=9"),
-                            height: 150,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            fit: BoxFit.contain,
+                          GestureDetector(
+                            onTap: () => show_image(widget.publicacion.foto1),
+                            child: createImage(widget.publicacion.foto1),
                           ),
-                          Image(
-                            image: const NetworkImage(
-                                "https://picsum.photos/250?image=9"),
-                            height: 150,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            fit: BoxFit.contain,
+                          GestureDetector(
+                            onTap: () => show_image(widget.publicacion.foto2),
+                            child: createImage(
+                              widget.publicacion.foto2,
+                            ),
                           ),
                         ],
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -135,7 +175,9 @@ class _DetallesState extends State<Detalles> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             MaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                print(widget.publicacion.foto1);
+                              },
                               color: topColor,
                               elevation: 0,
                               shape: RoundedRectangleBorder(

@@ -496,6 +496,8 @@ class _NewWakalaState extends State<NewWakala> {
                         } else {
                           print(prefs.getString('id'));
                           await publicarWakala();
+                          Navigator.pop(context);
+                          setState(() {});
                           print("validado con éxito");
                         }
                       },
