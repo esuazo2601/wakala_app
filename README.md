@@ -33,3 +33,11 @@ password: 123
 Una vez dentro se pueden revisar los wakalas o agregar nuevos.
 
 Enjoy! =) 
+
+* PD:
+
+No olvidar:
+
+```
+flutter pub get
+```
