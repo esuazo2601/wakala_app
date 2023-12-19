@@ -14,6 +14,14 @@ class UserModel {
   }
 }
 
+class ContadorPublicacion {
+  final int sigueAhiCount;
+  final int yaNoEstaCount;
+
+  const ContadorPublicacion(
+      {required this.sigueAhiCount, required this.yaNoEstaCount});
+}
+
 class PublicacionesModel {
   final String autor;
   final String descripcion;
@@ -21,15 +29,15 @@ class PublicacionesModel {
   final String foto1;
   final String foto2;
   final String titulo;
-
-  const PublicacionesModel({
-    required this.autor,
-    required this.descripcion,
-    required this.fecha,
-    required this.foto1,
-    required this.foto2,
-    required this.titulo,
-  });
+  String? id;
+  PublicacionesModel(
+      {required this.autor,
+      required this.descripcion,
+      required this.fecha,
+      required this.foto1,
+      required this.foto2,
+      required this.titulo,
+      this.id});
 
   toJson() {
     return {
@@ -38,7 +46,7 @@ class PublicacionesModel {
       "Fecha": fecha,
       "Foto 1": foto1,
       "Foto 2": foto2,
-      "Titulo": titulo
+      "Titulo": titulo,
     };
   }
 }

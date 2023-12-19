@@ -51,7 +51,8 @@ Future<List<PublicacionesModel>> getPublicaciones() async {
           fecha: publicacion.data()["Fecha"],
           foto1: publicacion.data()["Foto 1"],
           foto2: publicacion.data()["Foto 2"],
-          titulo: publicacion.data()["Titulo"]));
+          titulo: publicacion.data()["Titulo"],
+          id: publicacion.id));
     }
     return publicaciones;
   } catch (error) {
@@ -68,9 +69,72 @@ Future<void> postPublicacion(PostPublicacionModel publicacion) async {
 }
 
 Future<DocumentReference> getReferencia(String id) async {
-  DocumentReference autorRef = FirebaseFirestore.instance
+  DocumentReference autorRef = db
       .collection(
           "Usuarios") // Reemplaza con el nombre de tu colección de usuarios
       .doc(id);
   return autorRef;
+}
+
+Future<Map<String, int>> actualizarContador(bool sigueAhi, String id) async {
+  try {
+    // Obtener la referencia del documento de la publicación
+    DocumentReference publicacionRef =
+        FirebaseFirestore.instance.collection("Publicaciones").doc(id);
+    // Obtener los datos actuales del documento
+    var publicacionSnapshot = await publicacionRef.get();
+    // Obtener los valores actuales de los contadores
+    var data = publicacionSnapshot.data() as Map<String, dynamic>?;
+
+    int sigueAhiCount = data?['sigue_ahi'] ?? 0;
+    int yaNoEstaCount = data?['ya_no_esta'] ?? 0;
+    // Actualizar los contadores
+    if (sigueAhi) {
+      sigueAhiCount++;
+    } else {
+      yaNoEstaCount++;
+    }
+
+    // Actualizar el documento con los nuevos contadores
+    await publicacionRef.update({
+      'sigue_ahi': sigueAhiCount,
+      'ya_no_esta': yaNoEstaCount,
+    });
+
+    // Devolver los nuevos contadores
+    return {'sigueAhiCount': sigueAhiCount, 'yaNoEstaCount': yaNoEstaCount};
+  } catch (e) {
+    print('Error al actualizar los contadores: $e');
+    return {'sigueAhiCount': 0, 'yaNoEstaCount': 0};
+  }
+}
+
+Future<ContadorPublicacion> getContador(String id) async {
+  try {
+    var publicacionDoc = await db.collection("Publicaciones").doc(id).get();
+
+    if (publicacionDoc.exists) {
+      // El documento existe, puedes acceder a los datos.
+      print("document $publicacionDoc");
+      var auto = publicacionDoc.data()?['Autor'];
+      print("data $auto");
+      print("data ${publicacionDoc.data()?['Descripcion']}");
+
+      // Obtener los valores actuales de los contadores
+      int sigueAhiCount = publicacionDoc.data()?['sigue_ahi'] ?? 0;
+      int yaNoEstaCount = publicacionDoc.data()?['ya_no_esta'] ?? 0;
+
+      return ContadorPublicacion(
+        sigueAhiCount: sigueAhiCount,
+        yaNoEstaCount: yaNoEstaCount,
+      );
+    } else {
+      // El documento no existe.
+      print("El documento con ID $id no existe.");
+      return ContadorPublicacion(sigueAhiCount: 0, yaNoEstaCount: 0);
+    }
+  } catch (e) {
+    print("Error al recuperar el contador: $e");
+    return ContadorPublicacion(sigueAhiCount: 0, yaNoEstaCount: 0);
+  }
 }
