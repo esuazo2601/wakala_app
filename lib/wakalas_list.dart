@@ -115,10 +115,11 @@ class _WakalasListState extends State<WakalasList> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 5, 30),
-                child: Align(
-                    alignment: Alignment.centerRight,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Ink(
                       decoration: const ShapeDecoration(
                           color: topColor, shape: CircleBorder()),
@@ -138,7 +139,9 @@ class _WakalasListState extends State<WakalasList> {
                         color: backGroundColor,
                         iconSize: 50,
                       ),
-                    )),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

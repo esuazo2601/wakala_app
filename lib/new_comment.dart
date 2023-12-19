@@ -1,4 +1,3 @@
-///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
 library;
 
 import 'package:flutter/material.dart';
@@ -147,7 +146,7 @@ class _NewCommentState extends State<NewComment> {
                             return;
                           }
                           Comentarios newComentario = Comentarios(
-                              autor: widget.publicacion.autor,
+                              autor: prefs.getString('nombre') ?? '@johnDoe',
                               contenido: _comentarioController.text,
                               refAutor: prefs.getString('id') ?? '');
                           if (await addComentario(
