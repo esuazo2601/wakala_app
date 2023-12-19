@@ -38,7 +38,10 @@ Future<List<PublicacionesModel>> getPublicaciones() async {
   //print("LLamando a las publis");
   List<PublicacionesModel> publicaciones = [];
   try {
-    var queryData = await db.collection("Publicaciones").get();
+    var queryData = await db
+        .collection("Publicaciones")
+        .orderBy("Fecha", descending: true)
+        .get();
 
     for (var publicacion in queryData.docs) {
       // Utiliza await para esperar la resolución de la consulta
