@@ -103,7 +103,9 @@ class _DetallesState extends State<Detalles> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: widget.publicacion.foto2.isNotEmpty
+                            ? MainAxisAlignment.spaceEvenly
+                            : MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -111,12 +113,11 @@ class _DetallesState extends State<Detalles> {
                             onTap: () => show_image(widget.publicacion.foto1),
                             child: createImage(widget.publicacion.foto1),
                           ),
-                          GestureDetector(
-                            onTap: () => show_image(widget.publicacion.foto2),
-                            child: createImage(
-                              widget.publicacion.foto2,
+                          if (widget.publicacion.foto2.isNotEmpty)
+                            GestureDetector(
+                              onTap: () => show_image(widget.publicacion.foto2),
+                              child: createImage(widget.publicacion.foto2),
                             ),
-                          ),
                         ],
                       ),
                       Padding(
@@ -175,9 +176,7 @@ class _DetallesState extends State<Detalles> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             MaterialButton(
-                              onPressed: () {
-                                print(widget.publicacion.foto1);
-                              },
+                              onPressed: () {},
                               color: topColor,
                               elevation: 0,
                               shape: RoundedRectangleBorder(

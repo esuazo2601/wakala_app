@@ -125,10 +125,15 @@ class _WakalasListState extends State<WakalasList> {
                       child: IconButton(
                         icon: const Icon(Icons.add),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const NewWakala()));
+                          Navigator.push<bool>(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const NewWakala()))
+                              .then((result) {
+                            if (result != null && result) {
+                              setState(() {});
+                            }
+                          });
                         },
                         color: backGroundColor,
                         iconSize: 50,
